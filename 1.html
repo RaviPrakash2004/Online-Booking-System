@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment Options</title>
+<style>
+  .hidden {
+    display: none;
+  }
+  .popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    z-index: 1000;
+  }
+</style>
+</head>
+<body>
+  <h1>Payment Options</h1>
+  <div class="payment-methods">
+    <label>
+      <input type="radio" name="paymentMethod" value="upi" />
+      Pay with UPI
+    </label>
+    <label>
+      <input type="radio" name="paymentMethod" value="debit_card" />
+      Pay with Debit Card
+    </label>
+  </div>
+
+  <div id="upiPopup" class="popup">
+    <h2>Enter your UPI Number:</h2>
+    <input type="text" id="upiNumber" />
+    <button id="upiSubmitBtn">Submit</button>
+  </div>
+
+  <div id="debitCardPopup" class="popup">
+    <h2>Enter your Debit Card Number:</h2>
+    <input type="text" id="debitCardNumber" />
+    <button id="debitCardSubmitBtn">Submit</button>
+  </div>
+
+  <div id="orderPlacedPopup" class="popup">
+    <h2>Order Placed Successfully!</h2>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const upiPopup = document.getElementById('upiPopup');
+      const debitCardPopup = document.getElementById('debitCardPopup');
+      const orderPlacedPopup = document.getElementById('orderPlacedPopup');
+
+      document.querySelectorAll('input[name="paymentMethod"]').forEach((input) => {
+        input.addEventListener('change', (event) => {
+          const selectedMethod = event.target.value;
+          if (selectedMethod === 'upi') {
+            upiPopup.style.display = 'block';
+            debitCardPopup.style.display = 'none';
+          } else if (selectedMethod === 'debit_card') {
+            debitCardPopup.style.display = 'block';
+            upiPopup.style.display = 'none';
+          }
+        });
+      });
+
+      document.getElementById('upiSubmitBtn').addEventListener('click', () => {
+        const upiNumber = document.getElementById('upiNumber').value.trim();
+        if (!upiNumber) {
+          alert('Please enter your UPI number.');
+          return;
+        }
+        orderPlacedPopup.style.display = 'block';
+      });
+
+      document.getElementById('debitCardSubmitBtn').addEventListener('click', () => {
+        const debitCardNumber = document.getElementById('debitCardNumber').value.trim();
+        if (!debitCardNumber) {
+          alert('Please enter your debit card number.');
+          return;
+        }
+        orderPlacedPopup.style.display = 'block';
+      });
+    });
+  </script>
+</body>
+</html>
